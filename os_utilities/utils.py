@@ -72,6 +72,8 @@ video_extensions = set([k for k,v in mimetypes.types_map.items() if v.startswith
 def get_image_files(path:PathOrStr, include:Optional[ListOfStrings]=None, exclude:Optional[ListOfStrings]=None, recurse:bool=True):
     return get_files(path=path, include=include, exclude=exclude, recurse=recurse, extensions=image_extensions)
 
+def get_video_files(path:PathOrStr, include:Optional[ListOfStrings]=None, exclude:Optional[ListOfStrings]=None, recurse:bool=True):
+    return get_files(path=path, include=include, exclude=exclude, recurse=recurse, extensions=video_extensions)
 
 # Cell
 def flatten(x:list):
