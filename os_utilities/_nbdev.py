@@ -10,10 +10,13 @@ index = {"PathOrStr": "utils.ipynb",
          "Path.listdirs": "utils.ipynb",
          "get_files": "utils.ipynb",
          "get_image_files": "utils.ipynb",
+         "get_video_files": "utils.ipynb",
          "image_extensions": "utils.ipynb",
          "video_extensions": "utils.ipynb",
          "flatten": "utils.ipynb",
-         "uniqueify": "utils.ipynb"}
+         "mkdir": "utils.ipynb",
+         "uniqueify": "utils.ipynb",
+         "clean_filename": "utils.ipynb"}
 
 modules = ["utils.py"]
 
