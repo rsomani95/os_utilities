@@ -16,7 +16,9 @@ index = {"PathOrStr": "utils.ipynb",
          "flatten": "utils.ipynb",
          "mkdir": "utils.ipynb",
          "uniqueify": "utils.ipynb",
-         "clean_filename": "utils.ipynb"}
+         "clean_filename": "utils.ipynb",
+         "PathLike": "utils.ipynb",
+         "listdirs": "utils.ipynb"}
 
 modules = ["utils.py"]
 
