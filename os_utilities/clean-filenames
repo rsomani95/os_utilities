@@ -1,0 +1,137 @@
+#!/usr/bin/env python
+import argparse
+import os
+import re
+from pathlib import Path
+
+desc = """
+
+This script
+* cleans up filenames by replacing any non-alphanumeric and non-underscore
+  characters with an underscore
+* ensures that the first character of the filename begins with an alphanumeric
+* creates a folder for each unique first character and places the files into that folder
+
+    Flags                     Sample Input                       Output
+=============            ======================          =====================
+                         ;--8½-(1963)_001A³.jpg    ==>   8___1963__001A_.jpg
+--lowercase              ;--8½-(1963)_001A³.jpg    ==>   8___1963__001a_.jpg
+--nest --lowercase       ;--8½-(1963)_001A³.jpg    ==>   8/8___1963__001a_.jpg
+
+
+By default, the script runs a trial run to ensure all filenames are captured
+and renamed as expected. If the run is successful (no errors), then rerun the
+script with the `--run` flag.
+Use the `--silence` flag to run in silent mode
+
+  SAMPLE USAGE
+================
+
+python clean_filenames.py -i ~/data --nest       ## prints expected output
+                                                 ## without writing to disk
+python clean_filenames.py -i ~/data --nest --run ## writes changes to disk
+"""
+epilogue = """
+By default the script will not rename any files but check to see that all
+the filenames are captured and cleaned successfully. If it doesn't, you will
+see an `AssertionError`
+To clean the filenames on disk, run with the `--run` flag
+"""
+
+parser = argparse.ArgumentParser(usage=desc, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('-i', '--input_dir', type=str, required=True,
+                    help='Path to the folder that requires file-name cleaning')
+parser.add_argument('-p', '--prefix', type=str,
+                    help='Add prefix to all filenames')
+parser.add_argument('-R', '--rename', action='store_true',
+                    help='Rename files on disk. USE WITH CAUTION')
+parser.add_argument('-n', '--nest', action='store_true',
+                    help='Place files into sub-directories of their 1st character (A-Z or 0-9)')
+parser.add_argument('-l', '--lowercase', action='store_true',
+                    help='Lowercase the filenames')
+parser.add_argument('-s', '--silence', action='store_true',
+                    help='Run the program in silent mode')
+parser.add_argument('-t', '--truncate', action='store_true',
+                    help='Truncate filnames longer than 200 characters. Trims the tail')
+args = parser.parse_args()
+
+
+path     = args.input_dir
+rename   = args.rename
+nest     = args.nest
+to_lower = args.lowercase
+silence  = args.silence
+truncate = args.truncate
+prefix   = args.prefix
+
+print('Silence:   ', silence)
+print('Rename:    ', rename)
+print('Nest:      ', nest)
+print('Lowercase: ', to_lower)
+print('Truncate:  ', truncate)
+
+# import sys
+# sys.exit()
+
+# see https://stackoverflow.com/questions/49460802/regex-match-all-vular-fractions
+fractions  = '\u00BC-\u00BE\u2150-\u215E' # not-exhaustive..?
+supscripts = '\u00B1-\u00B9'
+
+for i, (root,dirs,files) in enumerate(os.walk(path)):
+    files.sort()
+    root = Path(root)
+    if not rename:
+        if i==0: print("""
+This is a trial run to ensure everything works as expected. If you face no
+errors, re-run the script with the `--rename` flag to actually rename the files.
+
+""")
+    else:
+        if i==0: print("""
+!! ALERT !!
+
+This is _NOT_ a trial run.
+If you haven't run a trial and something goes wrong, you might not be able to
+simply re-run the script as some files might already have been moved.
+
+""")
+
+    for f in files:
+        if f.startswith('.'): continue # ignore hidden files
+        f = root/f
+
+        # finding non-alphanumerics and preparing new filename
+        fname_new = re.sub(f'[\W{supscripts}{fractions}]', '_', f.stem) # captures (?) subscripts, fractions, other non-alphanumerics
+        fname_new = re.sub(f'[^A-Za-z0-9_+]', '_', fname_new)           # captures alphabets in foreign languages
+        fname_new = re.sub('^[\W_]*'     , '' , fname_new)              # replace leading spl characters or '_'
+        assert re.match("^[A-Za-z0-9_]*$", fname_new), f'{fname_new} contains non-alphanumeric/underscore characters'
+        assert re.match("^[A-Za-z0-9]",    fname_new), f'{fname_new} OR {f} starts with a non-alphanumeric character'
+
+        if truncate:
+            if len(fname_new) > 200: fname_new = fname_new[:200]
+        if prefix:
+            fname_new = f"{prefix}_{fname_new}"
+        if to_lower: fname_new = fname_new.lower()
+        if nest:
+            if f.parent.name == fname_new[0].upper():
+                fname_new = f.parent/f"{fname_new}{f.suffix}"
+            else:
+                fname_new = f.parent / fname_new[0].upper() / f"{fname_new}{f.suffix}"
+
+        else:    fname_new = f.parent / f"{fname_new}{f.suffix}"
+        #fname_new = f.parent / subdir / f"{fname_new}{f.suffix}"
+        if not silence:
+            print('-'*80)
+            print(f"Input  => {f}")
+            print(f"Output => {fname_new}")
+
+        if rename:
+            # move to subdirectory
+            fname_new.parent.mkdir(exist_ok=True)
+            fname_new = f.parent / fname_new
+            f.rename(fname_new)
+
+print()
+print('-' * 80)
+print(' '*35 + 'Success!')
+print('-' * 80)

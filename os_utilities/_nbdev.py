@@ -2,10 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"PathOrStr": "utils.ipynb",
+index = {"PathLike": "utils.ipynb",
          "ListOfPaths": "utils.ipynb",
          "ListOfStrings": "utils.ipynb",
          "ls": "utils.ipynb",
+         "listdirs": "utils.ipynb",
          "Path.ls": "utils.ipynb",
          "Path.listdirs": "utils.ipynb",
          "get_files": "utils.ipynb",
@@ -16,9 +17,7 @@ index = {"PathOrStr": "utils.ipynb",
          "flatten": "utils.ipynb",
          "mkdir": "utils.ipynb",
          "uniqueify": "utils.ipynb",
-         "clean_filename": "utils.ipynb",
-         "PathLike": "utils.ipynb",
-         "listdirs": "utils.ipynb"}
+         "clean_filename": "utils.ipynb"}
 
 modules = ["utils.py"]
 
