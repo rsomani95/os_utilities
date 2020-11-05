@@ -17,7 +17,7 @@ def is_export(cell):
 
 def notebook2script(fname):
     fname = Path(fname)
-    fname_out = f"{fname.stem}.py"
+    fname_out = fname.parent/f"{fname.stem}.py"
     print(fname_out)
     main_dic = json.load(open(fname,'r'))
     cells = main_dic['cells']
@@ -40,7 +40,7 @@ of each cell into a script with same name as the notebook
 '''
 parser = argparse.ArgumentParser(usage=desc, 
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('-i', '--fname', type=str, metavar='',
+parser.add_argument('fname', type=str, metavar='NB_FNAME',
                     help='Path to the notebook to be converted')
 args = parser.parse_args()
 
