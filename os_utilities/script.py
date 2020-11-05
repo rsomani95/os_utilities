@@ -2,7 +2,7 @@
 
 __all__ = ['store_attr', 'str2bool', 'store_true', 'store_false', 'bool_arg', 'args_from_prog', 'call_parse',
            'maybe_attr', 'basic_repr', 'CustomFormatter', 'is_array', 'is_iter', 'listify', 'clean_type', 'Param',
-           'anno_parser', 'assign_doc', 'clean_md_lines', 'show_docs']
+           'anno_parser', 'assign_doc']
 
 # Cell
 import argparse
@@ -97,7 +97,9 @@ def basic_repr(flds=None):
     return _f
 
 # Cell
-class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter): pass
+class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter,
+                      argparse.RawDescriptionHelpFormatter,
+                      argparse.MetavarTypeHelpFormatter): pass
 
 # Cell
 def is_array(x):
@@ -140,11 +142,9 @@ class Param:
 
     def set_default(self, d):
         if self.default is None:
-            if d==inspect.Parameter.empty: self.required = False
+            if d==inspect.Parameter.empty: self.opt = False
             else: self.default = d
 
-    @property
-    def pre(self): return '--' if self.opt else ''
     @property
     def kwargs(self): return {k:v for k,v in self.__dict__.items()
                               if v is not None and k!='opt' and k[0]!='_' and k!='alias'}
@@ -158,15 +158,15 @@ def anno_parser(func, prog=None, description=None, usage=None, epilog=None):
     "Look at params (annotated with `Param`) in func and return an `ArgumentParser`"
     p = argparse.ArgumentParser(
         description=func.__doc__, prog=prog, usage=usage,
-        formatter_class=CustomFormatter)
+        formatter_class=argparse.MetavarTypeHelpFormatter)
     for k,v in inspect.signature(func).parameters.items():
         param = func.__annotations__.get(k, Param())
         param.set_default(v.default)
-        if param.opt is not None:
-            if param.alias is None: p.add_argument(f"{param.pre}{k}", **param.kwargs)
+        if param.opt is True:
+            if param.alias is None: p.add_argument( f"--{k}", **param.kwargs)
             else: p.add_argument(f"-{param.alias}", f"--{k}", **param.kwargs)
         else:
-            p.add_argument(f"{param.pre}{k}", **param.kwargs)
+            p.add_argument(k, **param.kwargs)
     p.add_argument(f"--pdb", help="Run in pdb debugger", action='store_true')
     p.add_argument(f"--xtra", help="Parse for additional args", type=str)
     return p
@@ -177,12 +177,3 @@ def assign_doc(func:Callable, docs:str):
     assert inspect.isfunction(func)
     assert isinstance(docs,str)
     func.__doc__ = docs
-
-# Cell
-def clean_md_lines(x): return x.replace('\n', '<br>')
-
-def show_docs(func:Callable):
-    "Return markdown of `func`'s __doc__'"
-    doc = func.__doc__
-    doc = clean_md_lines(doc)
-    return Markdown(doc)
