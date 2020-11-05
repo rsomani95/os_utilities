@@ -17,9 +17,30 @@ index = {"PathLike": "utils.ipynb",
          "flatten": "utils.ipynb",
          "mkdir": "utils.ipynb",
          "uniqueify": "utils.ipynb",
-         "clean_filename": "utils.ipynb"}
+         "clean_filename": "utils.ipynb",
+         "assign_doc": "script.ipynb",
+         "clean_md_lines": "script.ipynb",
+         "show_docs": "script.ipynb",
+         "store_attr": "script.ipynb",
+         "str2bool": "script.ipynb",
+         "store_true": "script.ipynb",
+         "store_false": "script.ipynb",
+         "bool_arg": "script.ipynb",
+         "args_from_prog": "script.ipynb",
+         "call_parse": "script.ipynb",
+         "maybe_attr": "script.ipynb",
+         "basic_repr": "script.ipynb",
+         "CustomFormatter": "script.ipynb",
+         "is_array": "script.ipynb",
+         "is_iter": "script.ipynb",
+         "listify": "script.ipynb",
+         "clean_type": "script.ipynb",
+         "Param": "script.ipynb",
+         "anno_parser": "script.ipynb"}
 
-modules = ["utils.py"]
+modules = ["utils.py",
+           "docs.py",
+           "script.py"]
 
 doc_url = "https://rsomani95.github.io/os_utilities/"
 
