@@ -99,7 +99,8 @@ def basic_repr(flds=None):
 # Cell
 class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter,
                       argparse.RawDescriptionHelpFormatter,
-                      argparse.MetavarTypeHelpFormatter): pass
+                      #argparse.MetavarTypeHelpFormatter
+                     ): pass
 
 # Cell
 def is_array(x):
@@ -135,19 +136,23 @@ class Param:
     "A parameter in a function used in `anno_parser` or `call_parse`"
     #__repr__=basic_repr('help')
     def __init__(self, help=None, type=None, opt=True, action=None, nargs=None, const=None,
-                 choices=None, required=None, alias=None, metavar='', default=None):
+                 choices=None, required=True, alias=None, metavar='', default=None):
         if type==store_true:  type,action,default=None,'store_true' ,False
         if type==store_false: type,action,default=None,'store_false',True
         store_attr()
 
     def set_default(self, d):
         if self.default is None:
-            if d==inspect.Parameter.empty: self.opt = False
+            if d==inspect.Parameter.empty and self.required is False:
+                self.required = None
+                self.opt = False
             else: self.default = d
 
     @property
     def kwargs(self): return {k:v for k,v in self.__dict__.items()
                               if v is not None and k!='opt' and k[0]!='_' and k!='alias'}
+    #@property
+    #def pre(self): return '--' if not self.opt else ''
     def __repr__(self):
         if self.help is not None:
               return f"{clean_type(self.type)} ({self.help})"
