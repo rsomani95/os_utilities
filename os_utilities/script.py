@@ -165,7 +165,7 @@ def anno_parser(func, prog=None, description=None, usage=None, epilog=None):
     "Look at params (annotated with `Param`) in func and return an `ArgumentParser`"
     p = argparse.ArgumentParser(
         description=func.__doc__, prog=prog, usage=usage,
-        formatter_class=argparse.MetavarTypeHelpFormatter)
+        formatter_class=CustomFormatter)
     for k,v in inspect.signature(func).parameters.items():
         param = func.__annotations__.get(k, Param())
         param.set_default(v.default)
