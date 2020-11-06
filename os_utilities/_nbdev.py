@@ -2,25 +2,9 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"PathLike": "utils.ipynb",
-         "ListOfPaths": "utils.ipynb",
-         "ListOfStrings": "utils.ipynb",
-         "ls": "utils.ipynb",
-         "listdirs": "utils.ipynb",
-         "Path.ls": "utils.ipynb",
-         "Path.listdirs": "utils.ipynb",
-         "get_files": "utils.ipynb",
-         "get_image_files": "utils.ipynb",
-         "get_video_files": "utils.ipynb",
-         "image_extensions": "utils.ipynb",
-         "video_extensions": "utils.ipynb",
-         "flatten": "utils.ipynb",
-         "mkdir": "utils.ipynb",
-         "uniqueify": "utils.ipynb",
-         "clean_filename": "utils.ipynb",
-         "assign_doc": "script.ipynb",
-         "clean_md_lines": "script.ipynb",
-         "show_docs": "script.ipynb",
+index = {"assign_doc": "script.ipynb",
+         "clean_md_lines": "docs.ipynb",
+         "show_doc": "docs.ipynb",
          "store_attr": "script.ipynb",
          "str2bool": "script.ipynb",
          "store_true": "script.ipynb",
@@ -36,11 +20,27 @@ index = {"PathLike": "utils.ipynb",
          "listify": "script.ipynb",
          "clean_type": "script.ipynb",
          "Param": "script.ipynb",
-         "anno_parser": "script.ipynb"}
+         "anno_parser": "script.ipynb",
+         "PathLike": "utils.ipynb",
+         "ListOfPaths": "utils.ipynb",
+         "ListOfStrings": "utils.ipynb",
+         "ls": "utils.ipynb",
+         "listdirs": "utils.ipynb",
+         "Path.ls": "utils.ipynb",
+         "Path.listdirs": "utils.ipynb",
+         "get_files": "utils.ipynb",
+         "get_image_files": "utils.ipynb",
+         "get_video_files": "utils.ipynb",
+         "image_extensions": "utils.ipynb",
+         "video_extensions": "utils.ipynb",
+         "flatten": "utils.ipynb",
+         "mkdir": "utils.ipynb",
+         "uniqueify": "utils.ipynb",
+         "clean_filename": "utils.ipynb"}
 
-modules = ["utils.py",
-           "docs.py",
-           "script.py"]
+modules = ["docs.py",
+           "script.py",
+           "utils.py"]
 
 doc_url = "https://rsomani95.github.io/os_utilities/"
 
