@@ -2,25 +2,9 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"assign_doc": "script.ipynb",
+index = {"assign_doc": "docs.ipynb",
          "clean_md_lines": "docs.ipynb",
          "show_doc": "docs.ipynb",
-         "store_attr": "script.ipynb",
-         "str2bool": "script.ipynb",
-         "store_true": "script.ipynb",
-         "store_false": "script.ipynb",
-         "bool_arg": "script.ipynb",
-         "args_from_prog": "script.ipynb",
-         "call_parse": "script.ipynb",
-         "maybe_attr": "script.ipynb",
-         "basic_repr": "script.ipynb",
-         "CustomFormatter": "script.ipynb",
-         "is_array": "script.ipynb",
-         "is_iter": "script.ipynb",
-         "listify": "script.ipynb",
-         "clean_type": "script.ipynb",
-         "Param": "script.ipynb",
-         "anno_parser": "script.ipynb",
          "PathLike": "utils.ipynb",
          "ListOfPaths": "utils.ipynb",
          "ListOfStrings": "utils.ipynb",
@@ -39,7 +23,6 @@ index = {"assign_doc": "script.ipynb",
          "clean_filename": "utils.ipynb"}
 
 modules = ["docs.py",
-           "script.py",
            "utils.py"]
 
 doc_url = "https://rsomani95.github.io/os_utilities/"
