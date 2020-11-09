@@ -52,7 +52,7 @@ def store_true():
 class Param:
     "A parameter in a function used in `anno_parser` or `call_parse`"
     def __init__(self, help=None, type=None, opt=True, action=None, nargs=None, const=None,
-                 choices=None, required=None, metavar=None, alias=None, default=None):
+                 choices=None, required=None, metavar='', alias=None, default=None):
         if type==store_true:  type,action,default=None,'store_true' ,False
         if type==store_false: type,action,default=None,'store_false',True
         store_attr()
