@@ -5,6 +5,13 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"assign_doc": "docs.ipynb",
          "clean_md_lines": "docs.ipynb",
          "show_doc": "docs.ipynb",
+         "store_attr": "fastcore_patch_script.ipynb",
+         "clean_type_str": "fastcore_patch_script.ipynb",
+         "store_false": "fastcore_patch_script.ipynb",
+         "store_true": "fastcore_patch_script.ipynb",
+         "Param": "fastcore_patch_script.ipynb",
+         "CustomFormatter": "fastcore_patch_script.ipynb",
+         "anno_parser": "fastcore_patch_script.ipynb",
          "PathLike": "utils.ipynb",
          "ListOfPaths": "utils.ipynb",
          "ListOfStrings": "utils.ipynb",
@@ -23,6 +30,7 @@ index = {"assign_doc": "docs.ipynb",
          "clean_filename": "utils.ipynb"}
 
 modules = ["docs.py",
+           "patch_fastcore_script.py",
            "utils.py"]
 
 doc_url = "https://rsomani95.github.io/os_utilities/"
