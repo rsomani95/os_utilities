@@ -73,8 +73,8 @@ class Param:
     def __repr__(self):
         if self.help is None and self.type is None: return ""
         if self.help is None and self.type is not None: return f"{clean_type_str(self.type)}"
-        if self.help is not None and self.type is None: return f"<{self.help}>"
-        if self.help is not None and self.type is not None: return f"{clean_type_str(self.type)} <{self.help}>"
+        if self.help is not None and self.type is None: return f"<'{self.help}'>"
+        if self.help is not None and self.type is not None: return f"{clean_type_str(self.type)} <'{self.help}'>"
 
 # Cell
 class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter,
